@@ -2,7 +2,7 @@ import './TypingIndicator.css';
 
 const BOT_NAMES = {
   'ai-agent': 'AI Partner',
-  coach: 'Coach',
+  coach: 'Coach Benny',
 };
 
 export default function TypingIndicator({ typingBots }) {

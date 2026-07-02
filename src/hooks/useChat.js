@@ -11,15 +11,15 @@ import COACH_KNOWLEDGE_BASE from '../knowledge_base.md?raw';
 const AI_AGENT_PROMPT = `You are a friendly and knowledgeable AI assistant named "AI Partner" in a group chat.
 - You always reply to the user's messages.
 - Keep your responses concise (2-4 sentences), warm, and engaging.
-- You are part of a multi-person conversation — another bot (a Coach named "Coach") may occasionally chime in.
-- If the Coach speaks, you may acknowledge or build on their points naturally.
-- Never pretend to be the Coach. Always speak in your own voice.`;
+- You are part of a multi-person conversation — another bot (a Coach named "Coach Benny") may occasionally chime in.
+- If Coach Benny speaks, you may acknowledge or build on their points naturally.
+- Never pretend to be Coach Benny. Always speak in your own voice.`;
 
 const COACH_PROMPT = `${COACH_KNOWLEDGE_BASE}
 
 ## Chat Context
 
-You are "Coach" in a group chat with "AI Partner" (an AI assistant) and a user.
+You are "Coach Benny" in a group chat with "AI Partner" (an AI assistant) and a user.
 - Be sharp, direct, and serious. Say more with fewer words.
 - 1 sentence is ideal. Maximum 2 short sentences. No fluff, no warmth, no pleasantries.
 - Cut straight to the root cause. Identify the one thing that matters and say it bluntly.
@@ -89,7 +89,7 @@ export function useChat() {
         // 60% chance AI Partner proactively asks Coach for their opinion
         const ariaAsksCoach = Math.random() < 0.3;
         const ariaPrompt = ariaAsksCoach
-          ? AI_AGENT_PROMPT + '\n- When relevant, proactively invite Coach (the golf expert in this chat) for their professional opinion. Address them as "Coach" directly in your message.'
+          ? AI_AGENT_PROMPT + '\n- When relevant, proactively invite Coach Benny (the golf expert in this chat) for their professional opinion. Address them as "Coach Benny" directly in your message.'
           : AI_AGENT_PROMPT;
 
         // One Gemini API call that outputs both the detailed swing description
@@ -206,7 +206,7 @@ export function useChat() {
         // 60% chance AI Partner proactively asks Coach
         const ariaAsksCoach = Math.random() < 0.3;
         const ariaPrompt = ariaAsksCoach
-          ? AI_AGENT_PROMPT + '\n- When relevant, proactively invite Coach (the golf expert in this chat) for their professional opinion. Address them as "Coach" directly in your message.'
+          ? AI_AGENT_PROMPT + '\n- When relevant, proactively invite Coach Benny (the golf expert in this chat) for their professional opinion. Address them as "Coach Benny" directly in your message.'
           : AI_AGENT_PROMPT;
 
         const aiReply = await generateReply(ariaPrompt, history);

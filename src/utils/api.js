@@ -3,7 +3,7 @@ import { GEMINI_CONFIG } from '../config/gemini';
 const ROLE_LABEL = {
   user: 'User',
   'ai-agent': 'AI Partner',
-  coach: 'Coach',
+  coach: 'Coach Benny',
 };
 
 /**
@@ -106,7 +106,7 @@ Add **confidence level** (High/Medium/Low) for the observations and justify if n
 Write a warm, engaging reply as AI Partner (2–5 sentences):
 - Reference your observations naturally — don't just list technical facts.
 - Keep it conversational and encouraging.
-- Never pretend to be Coach. Speak in your own voice.
+- Never pretend to be Coach Benny. Speak in your own voice.
 
 ──── Context ────
 {AI_AGENT_PROMPT}

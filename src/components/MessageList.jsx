@@ -14,8 +14,8 @@ export default function MessageList({ messages }) {
       <div className="message-list message-list--empty">
         <div className="empty-state">
           <span className="empty-icon">💬</span>
-          <p>Start the conversation!<br />AI Partner always replies. Coach might chime in.</p>
-          <p className="empty-hint">Try <code>@Coach</code> to get the Coach's attention.</p>
+          <p>Start the conversation!<br />AI Partner always replies. Coach Benny might chime in.</p>
+          <p className="empty-hint">Try <code>@Coach Benny</code> to get Coach Benny's attention.</p>
         </div>
       </div>
     );

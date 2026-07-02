@@ -103,10 +103,10 @@ export default function ChatInput({ onSend, disabled }) {
         className={`coach-toggle${coachMode ? ' coach-toggle--active' : ''}`}
         onClick={toggleCoach}
         disabled={disabled}
-        title="Toggle @Coach attention"
+        title="Toggle @Coach Benny attention"
         type="button"
       >
-        @Coach
+        @Coach Benny
       </button>
 
       {/* Pending video attachment preview */}
@@ -147,7 +147,7 @@ export default function ChatInput({ onSend, disabled }) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder={disabled ? 'Waiting for replies...' : pendingVideo ? 'Ask about your swing...' : 'Type a message... (@Coach to get attention)'}
+          placeholder={disabled ? 'Waiting for replies...' : pendingVideo ? 'Ask about your swing...' : 'Type a message... (@Coach Benny to get attention)'}
           rows={2}
           disabled={disabled}
         />

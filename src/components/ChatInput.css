@@ -3,7 +3,7 @@
    SwingLens spec: blur 20pt, r=28px capsule
    ================================================ */
 
-/* ---- Wrapper (holds @Coach button + capsule) ---- */
+/* ---- Wrapper (holds @Coach Benny button + capsule) ---- */
 
 .chat-input-wrapper {
   display: flex;
@@ -33,7 +33,7 @@
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* ---- Coach highlight — warm amber glow on the capsule ---- */
+/* ---- Coach Benny highlight — warm amber glow on the capsule ---- */
 
 .chat-input-wrapper--coach .chat-input-area {
   border-color: rgba(255,210,120,0.55);
@@ -43,44 +43,52 @@
     0 12px 32px rgba(12,39,35,0.16);
 }
 
-/* ---- @Coach toggle button ---- */
+/* ---- @Coach Benny toggle button — prominent call-to-action ---- */
 
 .coach-toggle {
-  background: rgba(160,120,50,0.22);
+  background: rgba(200,155,70,0.55);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,210,120,0.30);
+  border: 1.5px solid rgba(255,220,150,0.70);
   border-radius: 999px;
-  padding: 5px 12px;
+  padding: 8px 20px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: rgba(255,210,120,0.60);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #fff7e6;
   cursor: pointer;
   white-space: nowrap;
   align-self: flex-start;
   transition: all 0.2s ease;
   -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 0 24px rgba(200,160,80,0.25);
 }
 
 .coach-toggle--active {
-  background: rgba(200,155,70,0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-color: rgba(255,220,150,0.85);
-  color: #fff7e6;
-  box-shadow: 0 0 20px rgba(200,160,80,0.35);
+  background: rgba(220,175,80,0.85);
+  border-color: rgba(255,235,170,1);
+  color: #fffbe8;
+  box-shadow: 0 0 36px rgba(220,180,80,0.55);
+  transform: scale(1.04);
 }
 
 .coach-toggle:hover:not(:disabled) {
-  border-color: rgba(255,210,120,0.60);
-  color: rgba(255,210,120,0.85);
+  border-color: rgba(255,230,160,0.90);
+  color: #fffbe8;
+  box-shadow: 0 0 32px rgba(200,160,80,0.40);
+  transform: scale(1.04);
+}
+
+.coach-toggle:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .coach-toggle:disabled {
   opacity: 0.30;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 /* ---- Textarea ---- */

@@ -7,7 +7,7 @@ export default function ChatRoom({ messages, typingBots, isProcessing, onSend })
   return (
     <div className="chat-room">
       <header className="chat-header">
-        <h1>User · AI Partner · Coach</h1>
+        <h1>User · AI Partner · Coach Benny</h1>
       </header>
 
       <MessageList messages={messages} />

@@ -3,7 +3,7 @@ import './MessageBubble.css';
 const ROLE_LABELS = {
   user: 'You',
   'ai-agent': 'AI Partner',
-  coach: 'Coach',
+  coach: 'Coach Benny',
 };
 
 export default function MessageBubble({ message }) {

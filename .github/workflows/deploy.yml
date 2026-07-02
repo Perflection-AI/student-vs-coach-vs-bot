@@ -3,8 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-    paths:
-      - 'Franklin_Prototypes/0701_3P_Paradigm/**'
   workflow_dispatch:
 
 permissions:
@@ -22,9 +20,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    defaults:
-      run:
-        working-directory: Franklin_Prototypes/0701_3P_Paradigm
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,7 +29,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: Franklin_Prototypes/0701_3P_Paradigm/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install
         run: npm ci
@@ -50,7 +45,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: Franklin_Prototypes/0701_3P_Paradigm/dist
+          path: dist
 
       - name: Deploy to GitHub Pages
         id: deployment

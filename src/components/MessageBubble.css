@@ -90,25 +90,20 @@
 }
 
 /* ============================================
-   Coach Benny — Warm amber glass + gold border
+   User message in @Coach Benny mode — gold border + badge
    ============================================ */
 
-.bubble--coach {
+.bubble--user-coach-mode {
   position: relative;
-  background: linear-gradient(145deg, rgba(200,160,80,0.45), rgba(180,130,60,0.25));
-  border: 2px solid rgba(255,200,80,0.7);
-  backdrop-filter: blur(18px) saturate(120%);
-  -webkit-backdrop-filter: blur(18px) saturate(120%);
-  border-radius: 18px 24px 18px 18px;
-  color: rgba(20,30,15,0.9);
+  border: 2px solid rgba(255,200,80,0.7) !important;
   box-shadow:
-    0 0 20px rgba(255,200,80,0.18),
-    0 10px 24px rgba(60,30,10,0.10),
-    inset 0 1px 1px rgba(255,255,255,0.4);
+    0 0 24px rgba(255,200,80,0.20),
+    0 8px 22px rgba(11,54,39,0.12),
+    inset 0 1px 1px rgba(255,255,255,0.18) !important;
 }
 
 /* @Coach Benny badge — small gold pill affixed to the top edge */
-.bubble--coach::before {
+.bubble--user-coach-mode::before {
   content: '@Coach Benny';
   position: absolute;
   top: -10px;
@@ -127,6 +122,22 @@
   white-space: nowrap;
   pointer-events: none;
   z-index: 2;
+}
+
+/* ============================================
+   Coach Benny — Warm amber glass
+   ============================================ */
+
+.bubble--coach {
+  background: linear-gradient(145deg, rgba(200,160,80,0.45), rgba(180,130,60,0.25));
+  border: 1px solid rgba(255,220,140,0.55);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  border-radius: 18px 24px 18px 18px;
+  color: rgba(20,30,15,0.9);
+  box-shadow:
+    0 10px 24px rgba(60,30,10,0.10),
+    inset 0 1px 1px rgba(255,255,255,0.4);
 }
 
 .bubble--coach .bubble-role {

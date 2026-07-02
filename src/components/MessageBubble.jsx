@@ -7,7 +7,7 @@ const ROLE_LABELS = {
 };
 
 export default function MessageBubble({ message }) {
-  const { role, content, video } = message;
+  const { role, content, video, coachMode } = message;
   const isUser = role === 'user';
 
   return (
@@ -17,7 +17,7 @@ export default function MessageBubble({ message }) {
           {role === 'ai-agent' ? '🤖' : '🎯'}
         </div>
       )}
-      <div className={`bubble ${isUser ? 'bubble--user' : 'bubble--bot'} bubble--${role}`}>
+      <div className={`bubble ${isUser ? 'bubble--user' : 'bubble--bot'} bubble--${role}${coachMode ? ' bubble--user-coach-mode' : ''}`}>
         <div className="bubble-role">{ROLE_LABELS[role] || role}</div>
         {content && <div className="bubble-content">{content}</div>}
         {video && (

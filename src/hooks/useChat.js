@@ -68,6 +68,7 @@ export function useChat() {
       role: 'user',
       content: userContent,
       timestamp: Date.now(),
+      coachMode: coachForced,
       ...(video ? {
         video: {
           base64: video.base64,

@@ -33,9 +33,10 @@
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* ---- Coach Benny highlight — warm amber glow on the capsule ---- */
+/* ---- Coach Benny highlight — warm amber glow + fill on the capsule ---- */
 
 .chat-input-wrapper--coach .chat-input-area {
+  background: rgba(200,160,80,0.18);
   border-color: rgba(255,210,120,0.55);
   box-shadow:
     inset 0 1px 1px rgba(255,255,255,0.28),

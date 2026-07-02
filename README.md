@@ -9,7 +9,7 @@ A React chat demo with **three personas** powered by **Gemini 3.5 Flash (REST AP
 | Persona | Role | Behavior |
 |---------|------|----------|
 | **User** (👤) | Golfer | Sends text + optional video attachments |
-| **Aria** (🤖) | AI Assistant | Always replies to every user message |
+| **AI Partner** (🤖) | AI Assistant | Always replies to every user message |
 | **Coach** (🎯) | Golf Coach | 30% chance to chime in; 100% if `@Coach` mentioned or manually toggled |
 
 ## Screenshots
@@ -19,9 +19,9 @@ A React chat demo with **three personas** powered by **Gemini 3.5 Flash (REST AP
 ## Features
 
 ### Chat
-- **3-persona orchestration** — Aria always replies first, then Coach may chime in
-- **@Coach toggle** — UI button to force Coach-only mode (skips Aria)
-- **Typing indicator** — "Aria/Coach is typing..." with animated dots while generating
+- **3-persona orchestration** — AI Partner always replies first, then Coach may chime in
+- **@Coach toggle** — UI button to force Coach-only mode (skips AI Partner)
+- **Typing indicator** — "AI Partner/Coach is typing..." with animated dots while generating
 - **Full conversation context** — Both personas see complete history including hidden context
 
 ### Video Upload & Analysis
@@ -29,7 +29,7 @@ A React chat demo with **three personas** powered by **Gemini 3.5 Flash (REST AP
 - **Video preview chip** — Shows filename with a ✕ remove button in the input area
 - **Validation** — Max 20 MB, max 15 seconds, MP4/MOV/WebM only
 - **Hidden video description** — Gemini generates a structured 4-section analysis (Video Context, Golfer & Equipment, Swing Observation, Notable Details) stored as a hidden message in history
-- **Coach also sees it** — Hidden descriptions are included in both Aria's and Coach's context window; only filtered from the visible chat UI
+- **Coach also sees it** — Hidden descriptions are included in both AI Partner's and Coach's context window; only filtered from the visible chat UI
 - **Concurrent text + video** — Single message bubble can contain both text and a playable video
 
 ### Coach System
@@ -86,21 +86,21 @@ User sends text + optional video
   ├── Has video?
   │   ├── Generate hidden description (4-part Gemini analysis)
   │   ├── Store as hidden message in history
-  │   ├── Aria analyzes video + full history → reply
+  │   ├── AI Partner analyzes video + full history → reply
   │   └── Coach may chime in (30% roll / @Coach)
   │
   ├── Coach-forced mode?
-  │   └── Coach replies (skip Aria)
+  │   └── Coach replies (skip AI Partner)
   │
   └── Normal mode (text only):
-      ├── Aria replies
+      ├── AI Partner replies
       └── Coach may chime in (30% roll / @Coach)
 ```
 
 ## Key Design Decisions
 
 - **No AI SDK** — Raw `fetch()` to Gemini REST API, bundle stays small
-- **Sequential execution** — Aria always completes before Coach, so Coach sees Aria's reply in context
+- **Sequential execution** — AI Partner always completes before Coach, so Coach sees AI Partner's reply in context
 - **Non-streaming** — Full response at once (streaming can be added later)
 - **Hidden messages** — `hidden: true` flag, filtered in `MessageList`, included in `formatHistory()` for bot context
 - **`pushAndSync` pattern** — Local mutable `history` array + `setMessages([...history])` to avoid React closure staleness across async steps

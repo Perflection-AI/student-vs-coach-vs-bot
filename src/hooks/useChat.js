@@ -8,7 +8,7 @@ import COACH_KNOWLEDGE_BASE from '../knowledge_base.md?raw';
  * markdown files. In production, these are inlined by Vite's raw import.
  * For now, we use placeholder text — replace with actual prompts.
  */
-const AI_AGENT_PROMPT = `You are a friendly and knowledgeable AI assistant named "Aria" in a group chat.
+const AI_AGENT_PROMPT = `You are a friendly and knowledgeable AI assistant named "AI Partner" in a group chat.
 - You always reply to the user's messages.
 - Keep your responses concise (2-4 sentences), warm, and engaging.
 - You are part of a multi-person conversation — another bot (a Coach named "Coach") may occasionally chime in.
@@ -19,13 +19,14 @@ const COACH_PROMPT = `${COACH_KNOWLEDGE_BASE}
 
 ## Chat Context
 
-You are participating as "Coach" in a group chat alongside another AI assistant named "Aria" and a user.
-- Decide whether to address the user directly or respond to Aria based on what's most helpful.
-- Never pretend to be Aria. Always speak in your own voice as the Coach.
-- Keep your chat responses concise — 1-2 short sentences. No fluff, no small talk.
-- Be direct and serious. You're a coach, not a cheerleader. Critique with precision, praise only when earned.
-- Bring your golf expertise into the conversation naturally — you don't need to use the structured template in every message.
-- Always reply with your thoughts — never output empty text.`;
+You are "Coach" in a group chat with "AI Partner" (an AI assistant) and a user.
+- Be sharp, direct, and serious. Say more with fewer words.
+- 1 sentence is ideal. Maximum 2 short sentences. No fluff, no warmth, no pleasantries.
+- Cut straight to the root cause. Identify the one thing that matters and say it bluntly.
+- AI Partner is the cheerleader. You are the coach. Do not match her tone.
+- Never pretend to be AI Partner. Always speak in your own voice.
+- Never output confidence levels, ratings, or scores.
+- Always reply — never output empty text.`;
 
 let nextId = 1;
 function genId() {
@@ -41,7 +42,7 @@ export function useChat() {
   /**
    * Send a user message and orchestrate bot replies.
    * @param {string} text - The user's message
-   * @param {boolean} [coachForced=false] - If true, skip Aria and force Coach to reply
+   * @param {boolean} [coachForced=false] - If true, skip AI Partner and force Coach to reply
    * @param {object|null} [video=null] - Optional video attachment { base64, mimeType, name, size, localUrl }
    */
   const sendMessage = useCallback(async (text, coachForced = false, video = null) => {
@@ -82,17 +83,17 @@ export function useChat() {
     try {
       if (video) {
         // ----- Video analysis: single unified Gemini call → structured {description, reply} -----
-        console.log('[useChat] Video attached — running unified Aria analysis...');
+        console.log('[useChat] Video attached — running unified AI Partner analysis...');
         setTypingBots((prev) => new Set(prev).add('ai-agent'));
 
-        // 60% chance Aria proactively asks Coach for their opinion
-        const ariaAsksCoach = Math.random() < 0.6;
+        // 60% chance AI Partner proactively asks Coach for their opinion
+        const ariaAsksCoach = Math.random() < 0.3;
         const ariaPrompt = ariaAsksCoach
           ? AI_AGENT_PROMPT + '\n- When relevant, proactively invite Coach (the golf expert in this chat) for their professional opinion. Address them as "Coach" directly in your message.'
           : AI_AGENT_PROMPT;
 
         // One Gemini API call that outputs both the detailed swing description
-        // (stored as hidden context) and Aria's visible chat reply.
+        // (stored as hidden context) and AI Partner's visible chat reply.
         let hiddenDesc = '';
         let ariaReply = '';
         try {
@@ -124,7 +125,7 @@ export function useChat() {
           pushAndSync(descMsg);
         }
 
-        // Store Aria's reply as a visible message
+        // Store AI Partner's reply as a visible message
         const aiMsg = {
           id: genId(),
           role: 'ai-agent',
@@ -138,10 +139,10 @@ export function useChat() {
           return next;
         });
 
-        // Coach trigger — Aria may have asked Coach, or random/@Coach roll
+        // Coach trigger — AI Partner may have asked Coach, or random/@Coach roll
         if (ariaAsksCoach) {
-          // 60%: Aria proactively asked — force Coach to reply immediately
-          console.log('[useChat] Aria asked Coach — forcing Coach reply');
+          // 60%: AI Partner proactively asked — force Coach to reply immediately
+          console.log('[useChat] AI Partner asked Coach — forcing Coach reply');
           setTypingBots((prev) => new Set(prev).add('coach'));
 
           try {
@@ -184,8 +185,8 @@ export function useChat() {
           }
         }
       } else if (coachForced) {
-        // ----- Coach-forced mode: skip Aria, only Coach replies -----
-        console.log('[useChat] Coach mode — forcing Coach reply, skipping Aria');
+        // ----- Coach-forced mode: skip AI Partner, only Coach replies -----
+        console.log('[useChat] Coach mode — forcing Coach reply, skipping AI Partner');
         setTypingBots((prev) => new Set(prev).add('coach'));
 
         const coachReply = await generateReply(COACH_PROMPT, history);
@@ -199,11 +200,11 @@ export function useChat() {
           return next;
         });
       } else {
-        // ----- Normal mode: Aria always replies, then Coach may chime in -----
+        // ----- Normal mode: AI Partner always replies, then Coach may chime in -----
         setTypingBots((prev) => new Set(prev).add('ai-agent'));
 
-        // 60% chance Aria proactively asks Coach
-        const ariaAsksCoach = Math.random() < 0.6;
+        // 60% chance AI Partner proactively asks Coach
+        const ariaAsksCoach = Math.random() < 0.3;
         const ariaPrompt = ariaAsksCoach
           ? AI_AGENT_PROMPT + '\n- When relevant, proactively invite Coach (the golf expert in this chat) for their professional opinion. Address them as "Coach" directly in your message.'
           : AI_AGENT_PROMPT;
@@ -218,10 +219,10 @@ export function useChat() {
           return next;
         });
 
-        // Coach trigger — Aria may have asked Coach, or random/@Coach roll
+        // Coach trigger — AI Partner may have asked Coach, or random/@Coach roll
         if (ariaAsksCoach) {
-          // 60%: Aria proactively asked — force Coach to reply immediately
-          console.log('[useChat] Aria asked Coach — forcing Coach reply');
+          // 60%: AI Partner proactively asked — force Coach to reply immediately
+          console.log('[useChat] AI Partner asked Coach — forcing Coach reply');
           setTypingBots((prev) => new Set(prev).add('coach'));
 
           try {

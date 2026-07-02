@@ -2,7 +2,7 @@ import { GEMINI_CONFIG } from '../config/gemini';
 
 const ROLE_LABEL = {
   user: 'User',
-  'ai-agent': 'Aria',
+  'ai-agent': 'AI Partner',
   coach: 'Coach',
 };
 
@@ -42,7 +42,7 @@ function extractJSON(text) {
  *
  * Asks Gemini to output a JSON object with two fields:
  *   - "description" — extremely detailed SwingLens-style technical analysis (unlimited length)
- *   - "reply"       — Aria's warm conversational chat reply
+ *   - "reply"       — AI Partner's warm conversational chat reply
  *
  * The description follows the SwingLens advanced_prompt methodology:
  *   Stage 1 — P1–P10 Comprehensive Observation
@@ -51,7 +51,7 @@ function extractJSON(text) {
  *   Stage 4 — Prescription Rationale
  * with full golf biomechanics terminology, confidence levels, and the "Good Player" filter.
  */
-const COMPOSITE_PROMPT_TEMPLATE = `You are an Elite PGA Coach-level analyst AND a friendly AI assistant named "Aria".
+const COMPOSITE_PROMPT_TEMPLATE = `You are an Elite PGA Coach-level analyst AND a friendly AI assistant named "AI Partner".
 
 Your response must be valid JSON with exactly two string fields:
 {
@@ -103,7 +103,7 @@ Add **confidence level** (High/Medium/Low) for the observations and justify if n
 - Do NOT use emoji or "—"/"—" dashes.
 
 ──── FIELD "reply" — Chat Message ────
-Write a warm, engaging reply as Aria (2–5 sentences):
+Write a warm, engaging reply as AI Partner (2–5 sentences):
 - Reference your observations naturally — don't just list technical facts.
 - Keep it conversational and encouraging.
 - Never pretend to be Coach. Speak in your own voice.
@@ -223,12 +223,12 @@ export async function generateReply(systemPrompt, messages) {
 
 /**
  * Unified Gemini call for video analysis — produces both the detailed
- * SwingLens-style swing description AND Aria's chat reply in a single request.
+ * SwingLens-style swing description AND AI Partner's chat reply in a single request.
  *
  * Uses Gemini's structured JSON output so the two fields are cleanly separated
  * and the description can be arbitrarily long (up to 65k tokens).
  *
- * @param {string} aiAgentPrompt - Aria's system prompt
+ * @param {string} aiAgentPrompt - AI Partner's system prompt
  * @param {Array} messages - Full conversation history
  * @param {string} videoBase64 - Base64-encoded video bytes
  * @param {string} mimeType - MIME type (e.g. video/mp4)

@@ -49,17 +49,6 @@
   color: #14261f;
 }
 
-.chat-header-sub {
-  font-family: 'DM Sans', sans-serif;
-  font-size: clamp(11px, 2.5vw, 12px);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: rgba(20, 38, 31, 0.6);
-  margin-top: 4px;
-  display: block;
-}
-
 /* ---- Desktop ---- */
 
 @media (min-width: 768px) {

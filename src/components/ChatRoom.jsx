@@ -7,8 +7,7 @@ export default function ChatRoom({ messages, typingBots, isProcessing, onSend })
   return (
     <div className="chat-room">
       <header className="chat-header">
-        <h1>3P Paradigm</h1>
-        <span className="chat-header-sub">User · Aria · Coach</span>
+        <h1>User · AI Partner · Coach</h1>
       </header>
 
       <MessageList messages={messages} />

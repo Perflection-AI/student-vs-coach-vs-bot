@@ -1,7 +1,7 @@
 import './TypingIndicator.css';
 
 const BOT_NAMES = {
-  'ai-agent': 'Aria',
+  'ai-agent': 'AI Partner',
   coach: 'Coach',
 };
 

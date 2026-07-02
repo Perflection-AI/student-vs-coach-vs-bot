@@ -2,7 +2,7 @@ import './MessageBubble.css';
 
 const ROLE_LABELS = {
   user: 'You',
-  'ai-agent': 'Aria',
+  'ai-agent': 'AI Partner',
   coach: 'Coach',
 };
 

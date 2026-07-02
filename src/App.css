@@ -1,0 +1,41 @@
+/* ================================================
+   SwingLens Chatbot — Glassmorphism Global Styles
+   Ref: 0530_Update_Chatbox.html
+   ================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Text',
+    'Helvetica Neue', Arial, sans-serif;
+  color: #4E4E4E;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+
+  /* 4-stop warm green-yellow gradient — lowered brightness, same saturation */
+  background:
+    radial-gradient(circle at 10% 18%, rgba(240,235,160,0.55) 0 18%, transparent 46%),
+    radial-gradient(circle at 18% 82%, rgba(180,210,60,0.40) 0 16%, transparent 46%),
+    radial-gradient(circle at 78% 12%, rgba(220,210,90,0.50) 0 20%, transparent 48%),
+    linear-gradient(145deg, #d6d680 0%, #a8b050 34%, #4a6a30 68%, #1a3028 100%);
+  background-attachment: fixed;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }

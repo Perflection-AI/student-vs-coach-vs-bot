@@ -1,0 +1,253 @@
+/* ================================================
+   Chat Input — Glass capsule + Gradient send button
+   SwingLens spec: blur 20pt, r=28px capsule
+   ================================================ */
+
+/* ---- Wrapper (holds @Coach button + capsule) ---- */
+
+.chat-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 12px 20px 16px;
+}
+
+/* ---- Capsule ---- */
+
+.chat-input-area {
+  display: flex;
+  gap: 8px;
+  padding: 12px 20px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
+  align-items: center;
+
+  /* Glass capsule container */
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.38);
+  background: rgba(255,255,255,0.14);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.28),
+    0 12px 32px rgba(12,39,35,0.16);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* ---- Coach highlight — warm amber glow on the capsule ---- */
+
+.chat-input-wrapper--coach .chat-input-area {
+  border-color: rgba(255,210,120,0.55);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.28),
+    0 0 24px rgba(200,160,80,0.22),
+    0 12px 32px rgba(12,39,35,0.16);
+}
+
+/* ---- @Coach toggle button ---- */
+
+.coach-toggle {
+  background: rgba(160,120,50,0.22);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,210,120,0.30);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(255,210,120,0.60);
+  cursor: pointer;
+  white-space: nowrap;
+  align-self: flex-start;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.coach-toggle--active {
+  background: rgba(200,155,70,0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: rgba(255,220,150,0.85);
+  color: #fff7e6;
+  box-shadow: 0 0 20px rgba(200,160,80,0.35);
+}
+
+.coach-toggle:hover:not(:disabled) {
+  border-color: rgba(255,210,120,0.60);
+  color: rgba(255,210,120,0.85);
+}
+
+.coach-toggle:disabled {
+  opacity: 0.30;
+  cursor: not-allowed;
+}
+
+/* ---- Textarea ---- */
+
+.chat-input {
+  flex: 1;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 10px 8px;
+  color: #FFFFFF;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;                 /* 16px prevents iOS auto-zoom */
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.chat-input::placeholder {
+  color: rgba(255,255,255,0.55);
+}
+
+.chat-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---- Pending video attachment preview ---- */
+
+.video-pending-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+.video-pending-preview__icon {
+  font-size: 0.95rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.video-pending-preview__name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.75);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.video-pending-preview__remove {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 4px;
+  line-height: 1;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+  flex-shrink: 0;
+}
+
+.video-pending-preview__remove:hover {
+  color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.12);
+}
+
+/* ---- Hidden file input ---- */
+
+.video-file-input {
+  display: none;
+}
+
+/* ---- Attach button — video upload ---- */
+
+.attach-button {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.55);
+  font-size: 1.15rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.attach-button:hover:not(:disabled) {
+  color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.08);
+}
+
+.attach-button:disabled {
+  opacity: 0.30;
+  cursor: not-allowed;
+}
+
+/* ---- Send button — Gradient green + lime glow ---- */
+
+.send-button {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(234,255,98,0.82);
+  background: linear-gradient(135deg, rgba(67,109,51,0.92), rgba(49,85,69,0.86));
+  color: #e9ff6f;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s, transform 0.15s;
+  flex-shrink: 0;
+  box-shadow:
+    0 0 20px rgba(230,255,75,0.30),
+    inset 0 1px 1px rgba(255,255,255,0.28);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.send-button:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.send-button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ---- Desktop ---- */
+
+@media (min-width: 768px) {
+  .chat-input-wrapper {
+    margin: 8px 24px 20px;
+  }
+
+  .chat-input-area {
+    padding: 12px 20px;
+    padding-bottom: 12px;
+  }
+
+  .chat-input {
+    font-size: 14px;
+  }
+
+  .send-button {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+}

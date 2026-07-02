@@ -1,0 +1,59 @@
+/* ================================================
+   Typing Indicator — Glass style
+   Matches AI bubble glass spec
+   ================================================ */
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  min-height: 28px;
+}
+
+/* ---- Glass typing bubble ---- */
+
+.typing-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  background: linear-gradient(145deg, rgba(255,255,255,0.62), rgba(255,255,255,0.28));
+  border: 1px solid rgba(255,255,255,0.50);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 18px;
+  padding: 10px 14px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(28,43,37,0.45);
+  animation: dot-bounce 1.4s infinite ease-in-out both;
+}
+
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+.dot:nth-child(3) { animation-delay: 0s; }
+
+@keyframes dot-bounce {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.35;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ---- Label ---- */
+
+.typing-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(11px, 2.5vw, 12px);
+  font-weight: 500;
+  color: rgba(20,38,31,0.55);
+  font-style: italic;
+}

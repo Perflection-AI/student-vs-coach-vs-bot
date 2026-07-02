@@ -1,0 +1,74 @@
+/* ================================================
+   ChatRoom — Glassmorphism layout
+   ================================================ */
+
+.chat-room {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  width: 100%;
+  position: relative;
+}
+
+/* ---- Grid overlay (matches mockup) ---- */
+
+.chat-room::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom, transparent, black 14%, black 72%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 14%, black 72%, transparent);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.chat-room > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Header (transparent, glass style) ---- */
+
+.chat-header {
+  padding: max(32px, env(safe-area-inset-top, 32px)) 28px 20px;
+  text-align: center;
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.chat-header h1 {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(18px, 4vw, 20px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: #14261f;
+}
+
+.chat-header-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(11px, 2.5vw, 12px);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(20, 38, 31, 0.6);
+  margin-top: 4px;
+  display: block;
+}
+
+/* ---- Desktop ---- */
+
+@media (min-width: 768px) {
+  .chat-room {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .chat-header {
+    padding: 40px 32px 24px;
+  }
+}

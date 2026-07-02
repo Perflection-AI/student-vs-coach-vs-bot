@@ -1,0 +1,236 @@
+/* ================================================
+   Message Bubble — Glassmorphism (SwingLens spec)
+   ================================================ */
+
+/* ---- Row ---- */
+
+.bubble-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 20px;
+}
+
+.bubble-row--user {
+  justify-content: flex-end;
+}
+
+.bubble-row--bot {
+  justify-content: flex-start;
+}
+
+/* ---- Avatar ---- */
+
+.bubble-avatar {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* ---- Base bubble ---- */
+
+.bubble {
+  max-width: 82%;
+  padding: 10px 14px;
+  line-height: 1.5;
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(13px, 3.2vw, 14px);
+  font-weight: 400;
+  position: relative;
+}
+
+/* ============================================
+   AI Agent / Aria — Glass white
+   ============================================ */
+
+.bubble--ai-agent {
+  background: linear-gradient(145deg, rgba(255,255,255,0.72), rgba(255,255,255,0.32));
+  border: 1px solid rgba(255,255,255,0.62);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  border-radius: 18px 24px 18px 18px;
+  color: rgba(15,25,22,0.88);
+  box-shadow:
+    0 12px 30px rgba(11,54,39,0.10),
+    inset 0 1px 1px rgba(255,255,255,0.65);
+}
+
+.bubble--ai-agent .bubble-role {
+  color: rgba(15,25,22,0.5);
+}
+
+/* ============================================
+   User — Semi-transparent dark green
+   ============================================ */
+
+.bubble--user {
+  background: linear-gradient(135deg, rgba(44,91,58,0.72), rgba(16,39,35,0.62));
+  border: 1px solid rgba(237,255,131,0.40);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px 18px 18px 24px;
+  color: #FFFFFF;
+  box-shadow:
+    0 8px 22px rgba(11,54,39,0.12),
+    inset 0 1px 1px rgba(255,255,255,0.18);
+}
+
+.bubble--user .bubble-role {
+  color: rgba(255,255,255,0.6);
+}
+
+/* ============================================
+   Coach — Warm amber glass
+   ============================================ */
+
+.bubble--coach {
+  background: linear-gradient(145deg, rgba(200,160,80,0.45), rgba(180,130,60,0.25));
+  border: 1px solid rgba(255,220,140,0.55);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  border-radius: 18px 24px 18px 18px;
+  color: rgba(20,30,15,0.9);
+  box-shadow:
+    0 10px 24px rgba(60,30,10,0.10),
+    inset 0 1px 1px rgba(255,255,255,0.4);
+}
+
+.bubble--coach .bubble-role {
+  color: rgba(80,50,20,0.5);
+}
+
+/* ---- Role label ---- */
+
+.bubble-role {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(10px, 2.2vw, 11px);
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 3px;
+}
+
+/* ---- Content ---- */
+
+.bubble-content {
+  font-size: inherit;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ---- Message list ---- */
+
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 0 24px;
+}
+
+.message-list--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---- Empty state ---- */
+
+.empty-state {
+  text-align: center;
+  padding: 0 24px;
+}
+
+.empty-state .empty-icon {
+  font-size: clamp(2.5rem, 8vw, 3rem);
+  display: block;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 4px 12px rgba(34,60,27,0.15));
+}
+
+.empty-state p {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(13px, 3.2vw, 14px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(20,38,31,0.55);
+}
+
+.empty-hint {
+  margin-top: 10px !important;
+  font-size: clamp(11px, 2.5vw, 12px) !important;
+  line-height: 1.35 !important;
+}
+
+.empty-hint code {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #14261f;
+  font-weight: 600;
+}
+
+/* ============================================
+   Video Attachment — within message bubbles
+   ============================================ */
+
+.video-attachment {
+  margin-top: 6px;
+}
+
+.video-attachment--with-text {
+  margin-top: 10px;
+}
+
+.video-attachment__player {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.15);
+  object-fit: contain;
+}
+
+.video-attachment__name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(10px, 2.2vw, 11px);
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 280px;
+}
+
+.bubble--user .video-attachment__name {
+  color: rgba(255,255,255,0.45);
+}
+
+/* ---- Desktop ---- */
+
+@media (min-width: 768px) {
+  .bubble-row {
+    padding: 12px 28px;
+  }
+
+  .bubble {
+    max-width: 70%;
+    padding: 16px 20px;
+  }
+}

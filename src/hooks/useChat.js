@@ -1,4 +1,4 @@
-import { generateReply, generateReplyWithVideo, generateVideoDescription } from '../utils/api';
+import { generateReply, generateUnifiedVideoReply } from '../utils/api';
 import { shouldCoachReply } from '../utils/coach-trigger';
 import { useCallback, useRef, useState } from 'react';
 import COACH_KNOWLEDGE_BASE from '../knowledge_base.md?raw';
@@ -81,41 +81,50 @@ export function useChat() {
 
     try {
       if (video) {
-        // ----- Video analysis: Aria always, then Coach may chime in -----
-        console.log('[useChat] Video attached — Aria analysing...');
+        // ----- Video analysis: single unified Gemini call → structured {description, reply} -----
+        console.log('[useChat] Video attached — running unified Aria analysis...');
         setTypingBots((prev) => new Set(prev).add('ai-agent'));
 
-        // Generate hidden video description for context
-        let descriptionText = '';
+        // One Gemini API call that outputs both the detailed swing description
+        // (stored as hidden context) and Aria's visible chat reply.
+        let hiddenDesc = '';
+        let ariaReply = '';
         try {
-          descriptionText = await generateVideoDescription(video.base64, video.mimeType);
-          console.log('[useChat] Video description:', descriptionText);
-        } catch (descErr) {
-          console.warn('[useChat] Video description failed:', descErr);
+          const unified = await generateUnifiedVideoReply(
+            AI_AGENT_PROMPT,
+            history,
+            video.base64,
+            video.mimeType,
+          );
+          hiddenDesc = unified.description;
+          ariaReply = unified.reply;
+          console.log('[useChat] Unified video reply — description chars:', hiddenDesc.length, 'reply chars:', ariaReply.length);
+        } catch (unifiedErr) {
+          console.warn('[useChat] Unified video reply failed:', unifiedErr);
+          // Fallback: if the unified call fails entirely, try the old two-step
+          ariaReply = 'I\'ve looked at your swing video but encountered an issue analyzing it in detail. Could you describe what you\'re working on?';
         }
 
-        if (descriptionText) {
+        // Store the detailed description as hidden context (Coach sees it too)
+        if (hiddenDesc) {
           const descMsg = {
             id: genId(),
             role: 'ai-agent',
-            content: `[Video analysis context: ${descriptionText}]`,
+            content: `[Video analysis context: ${hiddenDesc}]`,
             timestamp: Date.now(),
             hidden: true,
           };
-          console.log('[useChat] Hidden description stored in history:', JSON.stringify({
-            id: descMsg.id, hidden: descMsg.hidden, role: descMsg.role, content: descMsg.content,
-          }, null, 2));
+          console.log('[useChat] Hidden description stored (len=' + hiddenDesc.length + ')');
           pushAndSync(descMsg);
         }
 
-        const aiReply = await generateReplyWithVideo(
-          AI_AGENT_PROMPT,
-          history,  // includes hidden description
-          video.base64,
-          video.mimeType,
-        );
-
-        const aiMsg = { id: genId(), role: 'ai-agent', content: aiReply, timestamp: Date.now() };
+        // Store Aria's reply as a visible message
+        const aiMsg = {
+          id: genId(),
+          role: 'ai-agent',
+          content: ariaReply,
+          timestamp: Date.now(),
+        };
         pushAndSync(aiMsg);
         setTypingBots((prev) => {
           const next = new Set(prev);

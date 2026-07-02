@@ -147,7 +147,7 @@ export default function ChatInput({ onSend, disabled }) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder={disabled ? 'Waiting for replies...' : pendingVideo ? 'Ask about your swing...' : 'Type a message... (@Coach Benny to get attention)'}
+          placeholder={disabled ? 'Waiting for replies...' : pendingVideo ? 'Ask about your swing...' : 'Type a message...'}
           rows={2}
           disabled={disabled}
         />

@@ -85,13 +85,19 @@ export function useChat() {
         console.log('[useChat] Video attached — running unified Aria analysis...');
         setTypingBots((prev) => new Set(prev).add('ai-agent'));
 
+        // 60% chance Aria proactively asks Coach for their opinion
+        const ariaAsksCoach = Math.random() < 0.6;
+        const ariaPrompt = ariaAsksCoach
+          ? AI_AGENT_PROMPT + '\n- When relevant, proactively invite Coach (the golf expert in this chat) for their professional opinion. Address them as "Coach" directly in your message.'
+          : AI_AGENT_PROMPT;
+
         // One Gemini API call that outputs both the detailed swing description
         // (stored as hidden context) and Aria's visible chat reply.
         let hiddenDesc = '';
         let ariaReply = '';
         try {
           const unified = await generateUnifiedVideoReply(
-            AI_AGENT_PROMPT,
+            ariaPrompt,
             history,
             video.base64,
             video.mimeType,
@@ -132,12 +138,10 @@ export function useChat() {
           return next;
         });
 
-        // Coach trigger — may chime in on the video analysis (hidden description is in history)
-        const coachDecision = shouldCoachReply(trimmed);
-        console.log('[useChat] Coach decision after video:', coachDecision);
-
-        if (coachDecision.triggered) {
-          console.log('[useChat] Calling Coach API (video context)...');
+        // Coach trigger — Aria may have asked Coach, or random/@Coach roll
+        if (ariaAsksCoach) {
+          // 60%: Aria proactively asked — force Coach to reply immediately
+          console.log('[useChat] Aria asked Coach — forcing Coach reply');
           setTypingBots((prev) => new Set(prev).add('coach'));
 
           try {
@@ -154,6 +158,30 @@ export function useChat() {
             next.delete('coach');
             return next;
           });
+        } else {
+          // Normal trigger: 30% random or @Coach mention
+          const coachDecision = shouldCoachReply(trimmed);
+          console.log('[useChat] Coach decision after video:', coachDecision);
+
+          if (coachDecision.triggered) {
+            console.log('[useChat] Calling Coach API (video context)...');
+            setTypingBots((prev) => new Set(prev).add('coach'));
+
+            try {
+              const coachReply = await generateReply(COACH_PROMPT, history);
+              console.log('[useChat] Coach reply received:', coachReply.slice(0, 80) + '...');
+              const coachMsg = { id: genId(), role: 'coach', content: coachReply, timestamp: Date.now() };
+              pushAndSync(coachMsg);
+            } catch (coachErr) {
+              console.error('[useChat] Coach API call failed:', coachErr);
+            }
+
+            setTypingBots((prev) => {
+              const next = new Set(prev);
+              next.delete('coach');
+              return next;
+            });
+          }
         }
       } else if (coachForced) {
         // ----- Coach-forced mode: skip Aria, only Coach replies -----
@@ -174,7 +202,13 @@ export function useChat() {
         // ----- Normal mode: Aria always replies, then Coach may chime in -----
         setTypingBots((prev) => new Set(prev).add('ai-agent'));
 
-        const aiReply = await generateReply(AI_AGENT_PROMPT, history);
+        // 60% chance Aria proactively asks Coach
+        const ariaAsksCoach = Math.random() < 0.6;
+        const ariaPrompt = ariaAsksCoach
+          ? AI_AGENT_PROMPT + '\n- When relevant, proactively invite Coach (the golf expert in this chat) for their professional opinion. Address them as "Coach" directly in your message.'
+          : AI_AGENT_PROMPT;
+
+        const aiReply = await generateReply(ariaPrompt, history);
         const aiMsg = { id: genId(), role: 'ai-agent', content: aiReply, timestamp: Date.now() };
 
         pushAndSync(aiMsg);
@@ -184,27 +218,44 @@ export function useChat() {
           return next;
         });
 
-        // Coach trigger check — uses the user's latest message text
-        const coachDecision = shouldCoachReply(trimmed);
-        console.log('[useChat] Coach decision:', coachDecision);
-
-        if (coachDecision.triggered) {
-          console.log('[useChat] Calling Coach API...');
+        // Coach trigger — Aria may have asked Coach, or random/@Coach roll
+        if (ariaAsksCoach) {
+          // 60%: Aria proactively asked — force Coach to reply immediately
+          console.log('[useChat] Aria asked Coach — forcing Coach reply');
           setTypingBots((prev) => new Set(prev).add('coach'));
 
           try {
             const coachReply = await generateReply(COACH_PROMPT, history);
             console.log('[useChat] Coach reply received:', coachReply.slice(0, 80) + '...');
             const coachMsg = { id: genId(), role: 'coach', content: coachReply, timestamp: Date.now() };
-
             pushAndSync(coachMsg);
-            setTypingBots((prev) => {
-              const next = new Set(prev);
-              next.delete('coach');
-              return next;
-            });
           } catch (coachErr) {
             console.error('[useChat] Coach API call failed:', coachErr);
+          }
+
+          setTypingBots((prev) => {
+            const next = new Set(prev);
+            next.delete('coach');
+            return next;
+          });
+        } else {
+          // Normal trigger: 30% random or @Coach mention
+          const coachDecision = shouldCoachReply(trimmed);
+          console.log('[useChat] Coach decision:', coachDecision);
+
+          if (coachDecision.triggered) {
+            console.log('[useChat] Calling Coach API...');
+            setTypingBots((prev) => new Set(prev).add('coach'));
+
+            try {
+              const coachReply = await generateReply(COACH_PROMPT, history);
+              console.log('[useChat] Coach reply received:', coachReply.slice(0, 80) + '...');
+              const coachMsg = { id: genId(), role: 'coach', content: coachReply, timestamp: Date.now() };
+              pushAndSync(coachMsg);
+            } catch (coachErr) {
+              console.error('[useChat] Coach API call failed:', coachErr);
+            }
+
             setTypingBots((prev) => {
               const next = new Set(prev);
               next.delete('coach');
